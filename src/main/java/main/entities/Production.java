@@ -2,6 +2,8 @@ package main.entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Production {
@@ -18,6 +20,8 @@ public class Production {
 	private String assigned;
 	private String status;
 	private String origin;
+	
+	private static List<Production> fullList = new ArrayList<>();
 
 	public Production() {
 		this.id = UUID.randomUUID();
@@ -105,6 +109,14 @@ public class Production {
 
 	public void setOrigin(String origin) {
 		this.origin = origin;
+	}
+	
+	public static List<Production> getFullList(){
+		return fullList;
+	}
+	
+	public static void addDataToFullList(Production prod) {
+		fullList.add(prod);
 	}
 
 }

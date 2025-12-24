@@ -4,24 +4,21 @@ import java.util.List;
 
 import main.dao.ProductionDAO;
 import main.entities.DataToChart;
+import main.entities.DateTimeFilter;
 
 public class InitialBoxService {
 
 	private final ProductionDAO productionDAO = new ProductionDAO();
+	private final DateTimeFilter dateTimeFilter = new DateTimeFilter();
 
 	public List<DataToChart> getTotalDataList() {
+		
+		System.out.println("Filtro de data completo: " + dateTimeFilter.isDateTimeValid());
 
-		System.out.println("Método para buscar a produção total chamado.");
-
-		List<DataToChart> dtc = productionDAO.findTotalProductionPerUser();
-
-		if (!dtc.isEmpty())
-			System.out.println("Lista de produção total gerada com sucesso.");
-
-		if (dtc.isEmpty())
-			System.out.println("Falha ao criar lista de produtção total.");
-
-		return dtc;
+		if(dateTimeFilter.isDateTimeValid()) {
+			return productionDAO.findTotalProductionPerUser(dateTimeFilter);
+		}
+		
+		return productionDAO.findTotalProductionPerUser();
 	}
-
 }

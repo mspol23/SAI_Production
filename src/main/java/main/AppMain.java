@@ -19,7 +19,7 @@ public class AppMain extends Application {
 		VBox mainbox = new VBox(8);
 		mainbox.setPadding(new Insets(10));
 
-		Scene mainScene = new Scene(mainbox, 520, 700);
+		Scene mainScene = new Scene(mainbox, 700, 750);
 
 		FileChoosePane fileChoosePane = FileChoosePane.getInstance();
 		ChartBox chartBox = ChartBox.getInstance();
@@ -27,7 +27,12 @@ public class AppMain extends Application {
 		BottomBox bottomBox = new BottomBox();
 		UpdateDatabaseButtonBox updateDatabaseButtonBox = UpdateDatabaseButtonBox.getInstance();
 
-		mainbox.getChildren().addAll(fileChoosePane, updateDatabaseButtonBox, initialBox, chartBox, bottomBox);
+		mainbox.getChildren().addAll(
+				fileChoosePane, 
+				updateDatabaseButtonBox, 
+				initialBox, 
+				chartBox, 
+				bottomBox);
 
 		stage.setScene(mainScene);
 		stage.setMinHeight(630);

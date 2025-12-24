@@ -35,8 +35,8 @@ public class ComboBoxType extends HBox {
 	private void setBtn() {
 
 		btn.setOnAction(_ -> {
-			String titlePart = comboBoxType.getValue();
-			String title = "Total de " + titlePart + " Produzidos por Usuário.";
+			String titlePart = comboBoxType.getValue().toUpperCase();
+			String title = titlePart + " por Usuário.";
 			List<DataToChart> data = service.getUsersProductionByType(comboBoxType.getValue());
 			CreateBarChart<DataToChart> chart = new CreateBarChart<>(data, "Usuários", "Produção", title);
 			ChartBox.getInstance().addChart(chart.getBarChart());

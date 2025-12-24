@@ -51,7 +51,7 @@ public class ComboBoxByUser extends HBox {
 				type = "Origens";
 			}
 
-			String title = "Produção por " + titlePart;
+			String title = "Produção de " + selectUser.getValue() + ", por " + titlePart;
 
 			CreateBarChart<DataToChart> createChart = new CreateBarChart<>(dataToChart, type, amount, title);
 			ChartBox.getInstance().addChart(createChart.getBarChart());

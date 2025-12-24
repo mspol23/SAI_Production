@@ -27,5 +27,4 @@ public class DataToChart implements FormatToChart {
 	public String toString() {
 		return "DataToChart [category=" + category + ", amount=" + amount + "]";
 	}
-
 }

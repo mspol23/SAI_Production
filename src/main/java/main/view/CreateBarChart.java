@@ -20,7 +20,6 @@ public class CreateBarChart<T extends FormatToChart> {
 		createSeries(list, xLabel, yLabel, title);
 		chart.setLegendVisible(false);
 		yAxis.setAutoRanging(false);
-
 	}
 
 	public BarChart<String, Number> getBarChart() {
@@ -80,8 +79,11 @@ public class CreateBarChart<T extends FormatToChart> {
 						newBound.getMinX() + newBound.getWidth() / 2 - amountText.getBoundsInLocal().getWidth() / 2);
 				amountText.setLayoutY(newBound.getMinY() - 5);
 
-				yAxis.setUpperBound(maxValue + 10);
 			});
+
+			newData.setStyle("-fx-background-color: blue;");
+
+			yAxis.setUpperBound(maxValue + 10);
 		});
 	}
 

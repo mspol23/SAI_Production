@@ -5,4 +5,5 @@ public interface FormatToChart {
 	public String getCategory();
 
 	public Number getAmount();
+
 }

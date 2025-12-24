@@ -15,7 +15,7 @@ public class InsertProductionData {
 		List<List<String>> tableDataList = ExtractDataFromFile.getTableData();
 
 		tableDataList.forEach(lineItems -> {
-
+			
 			Production prod = new Production();
 			prod.setType(lineItems.get(0));
 			prod.setUsername(lineItems.get(1));
@@ -25,6 +25,10 @@ public class InsertProductionData {
 			prod.setAssigned(lineItems.get(5));
 			prod.setStatus(lineItems.get(6));
 			prod.setOrigin(lineItems.get(7));
+			
+			System.out.println("Registro: " + prod.getDateTime());
+			
+			Production.addDataToFullList(prod);
 
 			productionDao.insertData(prod);
 

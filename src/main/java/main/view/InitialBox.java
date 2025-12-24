@@ -1,23 +1,28 @@
 package main.view;
 
+import java.util.List;
+
 import javafx.geometry.Insets;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import main.dao.CheckTable;
-import main.dao.ProductionDAO;
 import main.entities.DataToChart;
+import main.service.CreatePieChartService;
 import main.service.InitialBoxService;
 
 public class InitialBox extends VBox {
 
-	ProductionDAO productionDAO = new ProductionDAO();
-	InitialBoxService initialBoxService = new InitialBoxService();
+	private InitialBoxService initialBoxService = new InitialBoxService();
+	private CreatePieChartService createPieChartService = new CreatePieChartService();
+	private DateTimeFilterToggle dateTimeFilter = new DateTimeFilterToggle();
+
 
 	private HBox buttonBox = new HBox(8);
 	private Label label = new Label("Escolha a configuração dos dados para gerar o gráfico:");
@@ -25,14 +30,27 @@ public class InitialBox extends VBox {
 	private Button btnPerOrigin = new Button("Por Origem do Dado");
 	private Button btnPerType = new Button("Por Tipo de Produção");
 	private Button btnTotal = new Button("Total Geral");
+	private Button btnTotalDocType = new Button("Total por Tipo");
+	private Button btnTotalOrigin = new Button("Total por Origem");
 	private ComboBoxContainer containerComboBox = ComboBoxContainer.getInstance();
 	private ChartBox chartBox = ChartBox.getInstance();
 
 	public InitialBox() {
-		getChildren().addAll(label, buttonBox, containerComboBox);
+		label.setStyle("-fx-font-weight: bold;");
+		getChildren().addAll(
+				label,
+				dateTimeFilter.getToggleVBox(),
+				buttonBox, 
+				containerComboBox);
 		setSpacing(8);
 		setPadding(new Insets(8, 10, 8, 10));
-		buttonBox.getChildren().addAll(btnPerUser, btnPerOrigin, btnPerType, btnTotal);
+		buttonBox.getChildren().addAll(
+				btnPerUser, 
+				btnPerOrigin, 
+				btnPerType, 
+				btnTotal,
+				btnTotalDocType, 
+				btnTotalOrigin);
 		configButton();
 		configLabel();
 		if (CheckTable.hasTables()) {
@@ -84,6 +102,27 @@ public class InitialBox extends VBox {
 			CreateBarChart<DataToChart> chart = new CreateBarChart<>(initialBoxService.getTotalDataList(), "Usuários",
 					"Quantidade de Documentos", title);
 			chartBox.addChart(chart.getBarChart());
+		});
+		
+		btnTotalDocType.setOnAction(_ -> {
+			System.out.println("Button 'btnTotalDocType' clicked.");
+			containerComboBox.getChildren().clear();
+			List<DataToChart> list = createPieChartService.getTotalFromEachType();
+			CreatePieChart createPieChart = CreatePieChart.createInstance(list);
+			PieChart pieChart = createPieChart.getPieChart();
+			pieChart.setTitle("Produção por Tipo de Documento");
+			chartBox.addChart(pieChart);
+			
+		});
+		
+		btnTotalOrigin.setOnAction(_ -> {
+			System.out.println("Button 'btnTotalOrigin' clicked.");
+			containerComboBox.getChildren().clear();
+			List<DataToChart> list = createPieChartService.getTotalFromEachOrigin();
+			CreatePieChart createPieChart = CreatePieChart.createInstance(list);
+			PieChart pieChart = createPieChart.getPieChart();
+			pieChart.setTitle("Produção por Origem");
+			chartBox.addChart(pieChart);
 		});
 	}
 
